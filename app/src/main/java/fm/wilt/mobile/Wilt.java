@@ -12,7 +12,16 @@ import fm.wilt.mobile.jwilt.Api;
 public class Wilt extends Application {
 
     private static Wilt instance;
-    private static String authToken;
+    private static Api authSession = new Api();
+
+    @Override
+    public void onCreate() {
+        instance = this;
+        super.onCreate();
+
+    }
+
+    public static Api getSession() { return authSession; }
 
     public static Wilt getInstance() {
         return instance;
@@ -20,11 +29,5 @@ public class Wilt extends Application {
 
     public static Context getContext() {
         return instance.getApplicationContext();
-    }
-
-    @Override
-    public void onCreate() {
-        instance = this;
-        super.onCreate();
     }
 }

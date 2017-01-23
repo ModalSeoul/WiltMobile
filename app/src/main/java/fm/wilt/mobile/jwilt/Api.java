@@ -8,17 +8,9 @@ import org.json.simple.*;
 public class Api {
 
     public String apiToken;
-    private static Api instance = null;
-    protected String format;
+    public String lastSong;
+    public boolean isAuthed;
     protected Http http = new Http("https://wilt.fm/api/");
-
-    protected Api() {}
-
-    public static Api getInstance() {
-        if (instance == null)
-            instance = new Api();
-        return instance;
-    }
 
     /**
      * Returns the JSONOBject of a given member
@@ -47,7 +39,8 @@ public class Api {
         String payload = String.format("username=%s&password=%s", username, password);
         try {
             JSONObject tokenResponse = http.post("api-token-auth/", payload, "");
-            this.apiToken = "Token " + (String) tokenResponse.get("token");
+            apiToken = "Token " + (String) tokenResponse.get("token");
+            isAuthed = true;
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -67,24 +60,13 @@ public class Api {
                 payload.concat("&album=" + album);
 
             try {
+                lastSong = song;
                 return http.post("scrobbles/", payload, apiToken);
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
         return null;
-    }
-
-    /**
-     * Returns true or false depending on
-     * whether or not the user has been authenticated
-     * @return boolean
-     */
-    public boolean isAuthed() {
-        if (apiToken.length() > 5)
-            return true;
-        else
-            return false;
     }
 
 }
