@@ -14,7 +14,7 @@ public class DisplayMessageActivity extends AppCompatActivity {
         setContentView(R.layout.activity_display_message);
 
         Intent intent = getIntent();
-        String message = intent.getStringExtra("GAY");
+        String message = intent.getStringExtra("Test");
 
         TextView textView = new TextView(this);
         textView.setTextSize(40);
